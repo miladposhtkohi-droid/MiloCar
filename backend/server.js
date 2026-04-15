@@ -1,8 +1,12 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
-// Config
-dotenv.config();
+import connectDB from "./config/db.js";
+import authRoutes from "./routes/authRoutes.js";
+
+
+
 // App
 const app = express();
 // Port
@@ -15,6 +19,10 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
+
+app.use("/api/auth", authRoutes);
+// koppla till databas
+connectDB();
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
