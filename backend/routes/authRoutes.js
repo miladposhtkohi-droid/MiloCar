@@ -2,6 +2,7 @@ import express from "express";
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import Admin from "../models/Admin.js";
 
 const router = express.Router();
 
@@ -9,9 +10,14 @@ const router = express.Router();
 router.post("/register", async (req, res) => {
   try {
     const { name, email, password } = req.body;
+   
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
+    }
+
+    if (!name || !email || !password) {
+      return res.status(400).json({ message: "All fields are required" });
     }
     //Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -50,6 +56,35 @@ router.post("/login", async (req, res) => {
 
     // skapa token
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "1d",
+    });
+
+    // skicka tillbaka token
+    res.json({ token });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+
+//admin login
+router.post("/admin/login", async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    // hitta admin i databasen
+    const admin = await Admin.findOne({ username });
+    if (!admin) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+
+    // jämför lösenord
+    const isPasswordValid = await bcrypt.compare(password, admin.password);
+    if (!isPasswordValid) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+
+    // skapa token
+    const token = jwt.sign({ id: admin._id }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
 

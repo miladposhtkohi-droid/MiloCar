@@ -12,6 +12,7 @@ router.post("/", async (req, res) => {
     const car = await Car.create({
       ...req.body,
       owner: userId,
+      
     });
     //skapa bil i databasen
     await car.save();
