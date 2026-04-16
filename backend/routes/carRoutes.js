@@ -1,10 +1,11 @@
 import express from "express";
 import Car from "../models/Car.js";
+import authMiddleware from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
 //create car
-router.post("/", async (req, res) => {
+router.post("/", authMiddleware, async (req, res) => {
   try {
     //hämta usrid från token
     const userId = req.user.id;

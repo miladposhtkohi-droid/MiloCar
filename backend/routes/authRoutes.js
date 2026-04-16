@@ -2,7 +2,7 @@ import express from "express";
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import Admin from "../models/Admin.js";
+
 
 const router = express.Router();
 
@@ -67,32 +67,5 @@ router.post("/login", async (req, res) => {
 });
 
 
-//admin login
-router.post("/admin/login", async (req, res) => {
-  try {
-    const { username, password } = req.body;
-    // hitta admin i databasen
-    const admin = await Admin.findOne({ username });
-    if (!admin) {
-      return res.status(400).json({ message: "Invalid credentials" });
-    }
-
-    // jämför lösenord
-    const isPasswordValid = await bcrypt.compare(password, admin.password);
-    if (!isPasswordValid) {
-      return res.status(400).json({ message: "Invalid credentials" });
-    }
-
-    // skapa token
-    const token = jwt.sign({ id: admin._id }, process.env.JWT_SECRET, {
-      expiresIn: "1d",
-    });
-
-    // skicka tillbaka token
-    res.json({ token });
-  } catch (error) {
-    res.status(500).json({ message: "Internal server error" });
-  }
-});
 
 export default router;
