@@ -1,39 +1,21 @@
 import express from "express";
-import Car from "../models/Car.js";
+import { createCar, getmyCar, updateCar, deleteCar } from "../controllers/carController.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
 //create car
-router.post("/", authMiddleware, async (req, res) => {
-  try {
-    //hämta usrid från token
-    const userId = req.user.id;
-    //skapa ny bil med data från body och owner
-    const car = await Car.create({
-      ...req.body,
-      owner: userId,
-      
-    });
-    //skapa bil i databasen
-    await car.save();
-    //returnera bil
-    res.status(201).json(car);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
+router.post("/", authMiddleware, createCar);
 
-//get all cars
-router.get("/", async (req, res) => {
-  try {
-    //hämta alla bilar
-    const cars = await Car.find().populate("owner", "name email");
-    // skicka tillbackan listan med bilar
-    res.status(200).json(cars);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
+//get my car
+router.get("/", authMiddleware, getmyCar);
+
+//update car
+router.put("/:id", authMiddleware, updateCar);
+
+
+//delete car
+router.delete("/:id", authMiddleware, deleteCar);
+
 
 export default router;
