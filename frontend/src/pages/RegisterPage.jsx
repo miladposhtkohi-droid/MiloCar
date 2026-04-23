@@ -23,43 +23,52 @@ const RegisterPage = () => {
     e.preventDefault();
     try {
       await register(form);
-      navigate("/"); // gå till startsidan efter registrering
+      navigate("/");
     } catch (error) {
       alert("Registrering misslyckades");
     }
   };
 
   return (
-    <div className="page auth-page">
-      <h1>Sign up</h1>
+    <div>
+      <h1>Skapa konto</h1>
 
-      <form onSubmit={handleSubmit} className="auth-form">
-        <input
-          type="text"
-          name="name"
-          placeholder="Namn"
-          value={form.name}
-          onChange={handleChange}
-          required
-        />
-  
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={form.email}
-          onChange={handleChange}
-          required
-        />
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Namn:</label>
+          <input
+            type="text"
+            name="name"
+            placeholder="Namn"
+            value={form.name}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Lösenord"
-          value={form.password}
-          onChange={handleChange}
-          required
-        />
+        <div>
+          <label>Email:</label>
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={form.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div>
+          <label>Lösenord:</label>
+          <input
+            type="password"
+            name="password"
+            placeholder="Lösenord"
+            value={form.password}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
         <button type="submit">Skapa konto</button>
       </form>

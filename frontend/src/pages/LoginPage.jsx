@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const LoginPage = () => {
   const { login } = useAuth();
@@ -22,37 +22,47 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       await login(form);
-      navigate("/"); // gå till startsidan efter login
+      navigate("/");
     } catch (error) {
       alert("Fel email eller lösenord");
     }
   };
 
   return (
-    <div className="page auth-page">
+    <div>
       <h1>Logga in</h1>
 
-      <form onSubmit={handleSubmit} className="auth-form">
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={form.email}
-          onChange={handleChange}
-          required
-        />
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Email:</label>
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={form.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Lösenord"
-          value={form.password}
-          onChange={handleChange}
-          required
-        />
+        <div>
+          <label>Lösenord:</label>
+          <input
+            type="password"
+            name="password"
+            placeholder="Lösenord"
+            value={form.password}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
         <button type="submit">Logga in</button>
       </form>
+
+      <p>
+        Inte medlem? <Link to="/register">Skapa ett konto</Link>
+      </p>
     </div>
   );
 };
