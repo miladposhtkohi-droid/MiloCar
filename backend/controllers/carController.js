@@ -1,5 +1,6 @@
 import Car from "../models/Car.js";
 
+
 //create car
 export const createCar = async (req, res) => {
   try {
@@ -51,7 +52,7 @@ export const updateCar = async (req, res) => {
     }
 
     //kolla om användaren är ägare till bilen
-    if (car.owner.toString() === userId) {
+    if (car.owner.toString() !== userId && userRole !== "admin") {
       return res.status(403).json({ message: "Unauthorized" });
     }
 
@@ -68,6 +69,13 @@ export const updateCar = async (req, res) => {
       });
       return res.status(200).json(updatedCar);
     }
+    //om ägare uppdaterar bilen
+    if (car.owner.toString() === userId) {
+      const updatedCar = await Car.findByIdAndUpdate(carId, req.body, {
+        new: true,
+      });
+      return res.status(200).json(updatedCar || { message: "Car updated" });
+    }
 
     //annars förbjudet
     return res.status(403).json({ message: "Forbidden" });
@@ -78,42 +86,31 @@ export const updateCar = async (req, res) => {
 //delete a car 
 
 export const deleteCar = async (req, res) => {
-
-try {
+  try {
     const carId = req.params.id;
     const userId = req.user.id;
     const userRole = req.user.role;
 
-    //hämta bilen
+    // hämta bilen
     const car = await Car.findById(carId);
     if (!car) {
       return res.status(404).json({ message: "Car not found" });
     }
 
-    //kolla om användaren är ägare till bilen
-    if (car.owner.toString() === userId) {
+    // om användaren INTE är ägare och INTE admin → blockera
+    if (car.owner.toString() !== userId && userRole !== "admin") {
       return res.status(403).json({ message: "Unauthorized" });
     }
 
-    //delete bilen
+    // radera bilen
     const deletedCar = await Car.findByIdAndDelete(carId);
-    res.status(200).json(deletedCar);
+    return res.status(200).json(deletedCar || { message: "Car deleted" });
 
-    //om admin delete bilen
-    if (userRole === "admin") {
-      const deletedCar = await Car.findByIdAndDelete(carId);
-      return res.status(200).json(deletedCar);
-    }
-
-    //annars förbjudet
-    return res.status(403).json({ message: "Forbidden" });
-}
-catch (error) {
+  } catch (error) {
     res.status(500).json({ message: error.message });
-}       
+  }
+};
 
-
-}
 
 
 
