@@ -30,12 +30,12 @@ const RegisterPage = () => {
   };
 
   return (
-    <div>
-      <h1>Skapa konto</h1>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-linear-to-br from-blue-50 to-indigo-100">
+      <h1 className="text-3xl font-extrabold text-blue-500 mb-6" >Skapa konto</h1>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <div>
-          <label>Namn:</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Namn:</label>
           <input
             type="text"
             name="name"
@@ -43,11 +43,12 @@ const RegisterPage = () => {
             value={form.name}
             onChange={handleChange}
             required
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
         <div>
-          <label>Email:</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Email:</label>
           <input
             type="email"
             name="email"
@@ -55,11 +56,12 @@ const RegisterPage = () => {
             value={form.email}
             onChange={handleChange}
             required
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
         <div>
-          <label>Lösenord:</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Lösenord:</label>
           <input
             type="password"
             name="password"
@@ -67,10 +69,11 @@ const RegisterPage = () => {
             value={form.password}
             onChange={handleChange}
             required
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
-        <button type="submit">Skapa konto</button>
+        <button type="submit" className="mt-4 px-4 py-2 w-full bg-blue-600 text-white rounded-md hover:bg-blue-700">Skapa konto</button>
       </form>
     </div>
   );
