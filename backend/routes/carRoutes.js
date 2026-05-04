@@ -1,14 +1,17 @@
 import express from "express";
-import { createCar, getmyCar, updateCar, deleteCar } from "../controllers/carController.js";
+import { createCar, getmyCar, updateCar, deleteCar, getAllCars } from "../controllers/carController.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 
 const router = express.Router();
+
+//get all cars (public or protected? let's assume public for viewing cars)
+router.get("/", getAllCars);
 
 //create car
 router.post("/", authMiddleware, createCar);
 
 //get my car
-router.get("/", authMiddleware, getmyCar);
+router.get("/my", authMiddleware, getmyCar);
 
 //update car
 router.put("/:id", authMiddleware, updateCar);

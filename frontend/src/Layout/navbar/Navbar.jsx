@@ -5,14 +5,12 @@ const Navbar = () => {
   const { user, logout } = useAuth();
 
   return (
-    <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-gradient-to-r from-slate-900/90 via-blue-900/80 to-indigo-900/90 border-b border-white/10 shadow-lg transition-all duration-300">
+    <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-white border-b border-gray-200 shadow-sm transition-all duration-300">
       <div className="container mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center group">
-          <img
-            src="/src/assets/logo/MiloCar.png"
-            alt="MiloCar Logo"
-            className="w-48 h-48 object-contain group-hover:opacity-80 transition-opacity cursor-pointer"
-          />
+          <span className="text-2xl font-extrabold text-blue-600 tracking-tight hover:text-blue-700 transition-colors">
+            MiloCar
+          </span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-8 font-medium text-slate-600">
@@ -36,6 +34,7 @@ const Navbar = () => {
           >
             Karta
           </NavLink>
+
           {user && (
             <NavLink
               to="/my-cars"
@@ -62,10 +61,10 @@ const Navbar = () => {
           )}
         </nav>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center space-x-4">
           {user ? (
             <div className="flex items-center gap-4">
-              <div className="flex flex-col items-end hidden md:flex">
+              <div className="flex flex-col items-end hidden sm:flex">
                 <span className="text-sm font-semibold text-slate-800">
                   {user.name}
                 </span>
@@ -73,7 +72,7 @@ const Navbar = () => {
               </div>
               <button
                 onClick={logout}
-                className="px-4 py-2 text-sm font-medium text-white bg-slate-800 rounded-full hover:bg-slate-700 transition-colors shadow-sm"
+                className="px-4 py-2 text-sm font-medium text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-colors shadow-sm"
               >
                 Logga ut
               </button>
@@ -88,7 +87,7 @@ const Navbar = () => {
               </NavLink>
               <NavLink
                 to="/register"
-                className="px-5 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-full hover:bg-blue-700 hover:shadow-md transition-all"
+                className="px-5 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 hover:shadow-md transition-all"
               >
                 Skapa konto
               </NavLink>

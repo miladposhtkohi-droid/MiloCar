@@ -19,6 +19,16 @@ export const createCar = async (req, res) => {
   }
 };
 
+//get all cars
+export const getAllCars = async (req, res) => {
+  try {
+    const cars = await Car.find().populate("owner", "name email");
+    res.status(200).json(cars);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 //get my car
 export const getmyCar = async (req, res) => {
   try {
@@ -51,7 +61,7 @@ export const updateCar = async (req, res) => {
       return res.status(404).json({ message: "Car not found" });
     }
 
-    //kolla om användaren är ägare till bilen
+    //kolla om användaren är ägare till bilen eller admin
     if (car.owner.toString() !== userId && userRole !== "admin") {
       return res.status(403).json({ message: "Unauthorized" });
     }
@@ -60,26 +70,11 @@ export const updateCar = async (req, res) => {
     const updatedCar = await Car.findByIdAndUpdate(carId, req.body, {
       new: true,
     });
-    res.status(200).json(updatedCar);
-
-    //om admin uppdaterar bilen
-    if (userRole === "admin") {
-      const updatedCar = await Car.findByIdAndUpdate(carId, req.body, {
-        new: true,
-      });
-      return res.status(200).json(updatedCar);
-    }
-    //om ägare uppdaterar bilen
-    if (car.owner.toString() === userId) {
-      const updatedCar = await Car.findByIdAndUpdate(carId, req.body, {
-        new: true,
-      });
-      return res.status(200).json(updatedCar || { message: "Car updated" });
-    }
-
-    //annars förbjudet
-    return res.status(403).json({ message: "Forbidden" });
-  } catch (error) {}
+    
+    return res.status(200).json(updatedCar);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
 };
 
 

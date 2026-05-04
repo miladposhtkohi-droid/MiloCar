@@ -24,8 +24,23 @@ export const register = (async (req, res) => {
       password: hashedPassword,
     });
 
+    // skapa token
+    const token = jwt.sign(
+      { id: newUser._id, role: newUser.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
+
     //skicka tillbaka användare (utan password)
-    res.status(201).json({ message: "User created successfully" });
+    res.status(201).json({
+      token,
+      user: {
+        _id: newUser._id,
+        name: newUser.name,
+        email: newUser.email,
+        role: newUser.role
+      }
+    });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }
@@ -57,7 +72,15 @@ export const login = ( async (req, res) => {
     );
 
     // skicka tillbaka token
-    res.json({ token });
+    res.json({
+      token,
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role
+      }
+    });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }
