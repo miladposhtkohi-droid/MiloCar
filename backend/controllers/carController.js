@@ -1,6 +1,5 @@
 import Car from "../models/Car.js";
 
-
 //create car
 export const createCar = async (req, res) => {
   try {
@@ -9,6 +8,7 @@ export const createCar = async (req, res) => {
     //skapa ny bil med data från body och owner
     const car = await Car.create({
       ...req.body,
+      status: "pending",
       owner: userId,
     });
 
@@ -22,7 +22,10 @@ export const createCar = async (req, res) => {
 //get all cars
 export const getAllCars = async (req, res) => {
   try {
-    const cars = await Car.find().populate("owner", "name email");
+    const cars = await Car.find({ status: "approved" }).populate(
+      "owner",
+      "name email",
+    );
     res.status(200).json(cars);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -30,7 +33,7 @@ export const getAllCars = async (req, res) => {
 };
 
 //get my car
-export const getmyCar = async (req, res) => {
+export const getMyCar = async (req, res) => {
   try {
     //hämta alla bilar
     const cars = await Car.find({ owner: req.user.id }).populate(
@@ -70,15 +73,14 @@ export const updateCar = async (req, res) => {
     const updatedCar = await Car.findByIdAndUpdate(carId, req.body, {
       new: true,
     });
-    
+
     return res.status(200).json(updatedCar);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
 };
 
-
-//delete a car 
+//delete a car
 
 export const deleteCar = async (req, res) => {
   try {
@@ -100,13 +102,7 @@ export const deleteCar = async (req, res) => {
     // radera bilen
     const deletedCar = await Car.findByIdAndDelete(carId);
     return res.status(200).json(deletedCar || { message: "Car deleted" });
-
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
-
-
-
-
-

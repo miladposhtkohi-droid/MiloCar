@@ -5,6 +5,7 @@ const carSchema = mongoose.Schema(
     title: { type: String, required: true },
     brand: { type: String, required: true },
     model: { type: String, required: true },
+    image: { type: String },
     year: { type: Number, required: true },
     price: { type: Number, required: true },
     mileage: { type: Number, required: true },
@@ -22,6 +23,11 @@ const carSchema = mongoose.Schema(
       default: "private",
     },
     owner: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, // koppling till användare
+    status: {
+      type: String,
+      enum: ["pending", "approved", "rejected"],
+      default: "pending",
+    },
   },
   {
     timestamps: true,

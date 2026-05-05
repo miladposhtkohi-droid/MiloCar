@@ -7,6 +7,7 @@ import connectDB from './config/db.js';
 
 import authRoutes from './routes/authRoutes.js';
 import carRoutes from './routes/carRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
 
 // 1. Ladda miljövariabler (.env)
 dotenv.config();
@@ -31,9 +32,11 @@ app.get('/', (req, res) => {
 // 7. API-routes
 app.use('/api/auth', authRoutes);
 app.use('/api/cars', carRoutes);
+app.use('/api/admin', adminRoutes);
 
 // 8. Starta servern
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+

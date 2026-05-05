@@ -1,5 +1,11 @@
 import express from "express";
-import { createCar, getmyCar, updateCar, deleteCar, getAllCars } from "../controllers/carController.js";
+import {
+  createCar,
+  getMyCar,
+  updateCar,
+  deleteCar,
+  getAllCars,
+} from "../controllers/carController.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 
 const router = express.Router();
@@ -11,14 +17,12 @@ router.get("/", getAllCars);
 router.post("/", authMiddleware, createCar);
 
 //get my car
-router.get("/my", authMiddleware, getmyCar);
+router.get("/my", authMiddleware, getMyCar);
 
 //update car
 router.put("/:id", authMiddleware, updateCar);
 
-
 //delete car
 router.delete("/:id", authMiddleware, deleteCar);
-
 
 export default router;
