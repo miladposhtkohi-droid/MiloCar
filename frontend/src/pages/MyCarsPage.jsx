@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getMyCars, deleteCar } from "../api/carApi";
+import { getAllCars, deleteCar } from "../api/carApi";
 import CarCard from "../components/Cars/CarCard";
 
 const MyCarsPage = () => {
@@ -8,7 +8,7 @@ const MyCarsPage = () => {
 
   const fetchMyCars = async () => {
     setLoading(true);
-    const res = await getMyCars();
+    const res = await getAllCars();
     setCars(res.data);
     setLoading(false);
   };
