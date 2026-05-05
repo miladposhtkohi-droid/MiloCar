@@ -59,6 +59,18 @@ const Navbar = () => {
               Lägg upp bil
             </NavLink>
           )}
+          {user && user.role === "admin" && (
+            <NavLink
+              to="/admin"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-blue-600 transition-colors"
+                  : "hover:text-blue-600 transition-colors"
+              }
+            >
+              Admin
+            </NavLink>
+          )}
         </nav>
 
         <div className="flex items-center space-x-4">

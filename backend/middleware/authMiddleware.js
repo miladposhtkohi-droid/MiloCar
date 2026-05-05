@@ -12,13 +12,12 @@ export default function authMiddleware(req, res, next) {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded; // <-- här skapas req.user
-    console.log(req.user)
+    console.log(req.user);
     next();
   } catch (err) {
-    res.status(400).json({ message: "Token is not valid" });
+    res.status(401).json({ message: "Token is not valid" });
   }
 }
-
 
 //admin middleware
 export function adminMiddleware(req, res, next) {

@@ -15,14 +15,15 @@ export const approveCar = async (req, res) => {
   try {
     const car = await Car.findByIdAndUpdate(
       req.params.id,
-      { approved: true },
+      { status: "approved" },
       { new: true },
     );
-    res.status(200).json(car);
+
     if (!car) {
       return res.status(404).json({ message: "Car not found" });
     }
-    res.json({ message: "Car approved", car });
+
+    res.status(200).json({ message: "Car approved", car });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -33,14 +34,15 @@ export const rejectCar = async (req, res) => {
   try {
     const car = await Car.findByIdAndUpdate(
       req.params.id,
-      { approved: false },
+      { status: "rejected" },
       { new: true },
     );
-    res.status(200).json(car);
+    
     if (!car) {
       return res.status(404).json({ message: "Car not found" });
     }
-    res.json({ message: "Car rejected", car });
+    
+    res.status(200).json({ message: "Car rejected", car });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

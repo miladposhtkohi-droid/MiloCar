@@ -12,26 +12,68 @@ const CarFormPage = () => {
     model: "",
     year: "",
     price: "",
+    mileage: "",
     location: "",
     fuelType: "",
     gearbox: "",
+    description: "",
+    image: "",
   });
 
   const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
+    if (e.target.type === "file") {
+      // Hantera fil-uppladdning
+      const file = e.target.files[0];
+      if (file) {
+        // Skapa en temporär URL för förhandsvisning
+        const imageUrl = URL.createObjectURL(file);
+        setForm({
+          ...form,
+          image: imageUrl,
+          imageFile: file, // Spara fil-objektet för upload
+        });
+      }
+    } else {
+      // Hantera vanliga text-inputs
+      setForm({
+        ...form,
+        [e.target.name]: e.target.value,
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      await createCar(form);
+      // Skapa FormData för att hantera fil-uppladdning
+      const formData = new FormData();
+
+      // Lägg till alla text-fält
+      formData.append("title", form.title);
+      formData.append("brand", form.brand);
+      formData.append("model", form.model);
+      formData.append("year", parseInt(form.year));
+      formData.append("price", parseInt(form.price));
+      formData.append("mileage", parseInt(form.mileage || 0));
+      formData.append("location", form.location);
+      formData.append("fuelType", form.fuelType);
+      formData.append("gearbox", form.gearbox);
+      formData.append("description", form.description);
+
+      // Lägg till bild om den finns
+      if (form.imageFile) {
+        formData.append("image", form.imageFile);
+      }
+
+      await createCar(formData);
       navigate("/my-cars");
     } catch (error) {
-      alert("Kunde inte skapa bil");
+      console.error("Error creating car:", error);
+      alert(
+        "Kunde inte skapa bil: " +
+          (error.response?.data?.message || error.message),
+      );
     }
   };
 
@@ -51,6 +93,16 @@ const CarFormPage = () => {
               value={form.title}
               onChange={handleChange}
               required
+            />
+          </div>
+          <div className="img-upload">
+            <label htmlFor="image">Bild</label>
+            <input
+              id="image"
+              name="image"
+              type="file"
+              accept="image/*"
+              onChange={handleChange}
             />
           </div>
 

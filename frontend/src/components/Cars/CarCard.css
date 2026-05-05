@@ -1,0 +1,165 @@
+/* CarCard.css - Modern bil-kort som Blocket.se */
+
+.car-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: 320px;
+}
+
+.car-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.car-card-image-container {
+  position: relative;
+  width: 100%;
+  height: 160px;
+  overflow: hidden;
+  background-color: #f8fafc;
+}
+
+.car-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.car-card:hover .car-card-image {
+  transform: scale(1.05);
+}
+
+.car-card-year-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(4px);
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #334155;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.car-card-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.car-card-header {
+  margin-bottom: 12px;
+}
+
+.car-card-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 4px;
+  line-height: 1.2;
+}
+
+.car-card-subtitle {
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 0;
+}
+
+.car-card-price {
+  font-size: 20px;
+  font-weight: 800;
+  color: #2563eb;
+  margin: 16px 0;
+}
+
+.car-card-features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: auto;
+  margin-bottom: 20px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.car-card-feature {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #f8fafc;
+  padding: 6px 8px;
+  border-radius: 6px;
+}
+
+.car-card-feature-icon {
+  width: 14px;
+  height: 14px;
+  color: #94a3b8;
+  flex-shrink: 0;
+}
+
+.car-card-feature-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.car-card-feature.location {
+  grid-column: 1 / -1;
+}
+
+.car-card-button {
+  width: 100%;
+  background-color: #1e293b;
+  color: white;
+  padding: 12px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.car-card-button:hover {
+  background-color: #2563eb;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .car-card-image-container {
+    height: 180px;
+  }
+
+  .car-card-content {
+    padding: 16px;
+  }
+
+  .car-card-title {
+    font-size: 16px;
+  }
+
+  .car-card-price {
+    font-size: 18px;
+  }
+
+  .car-card-features {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}

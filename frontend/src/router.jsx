@@ -7,6 +7,7 @@ import CarDetailsPage from "./pages/CarDetailsPage";
 import CarFormPage from "./pages/CarFormPage";
 import MyCarsPage from "./pages/MyCarsPage";
 import MapPage from "./pages/MapPage";
+import AdminDashboard from "./pages/AdminDashboard";
 
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -42,6 +43,15 @@ const router = createBrowserRouter([
       },
 
       { path: "map", element: <MapPage /> },
+
+      {
+        path: "admin",
+        element: (
+          <ProtectedRoute>
+            <AdminDashboard />
+          </ProtectedRoute>
+        ),
+      },
 
       { path: "login", element: <LoginPage /> },
       { path: "register", element: <RegisterPage /> },
