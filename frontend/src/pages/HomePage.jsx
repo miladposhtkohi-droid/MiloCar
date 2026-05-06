@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import BgBild from "../assets/bg/BgBild.png";
 
 const HomePage = () => {
   return (
@@ -7,7 +8,7 @@ const HomePage = () => {
       <section className="relative overflow-hidden pt-24 pb-32 lg:pt-36 lg:pb-40">
         <div className="absolute inset-0 overflow-hidden">
           <img
-            src="/src/assets/bg/BgBild.png"
+            src={BgBild}
             alt="Background"
             className="w-full h-full object-cover"
           />
