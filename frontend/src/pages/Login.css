@@ -1,0 +1,127 @@
+/* Wrapper */
+.login-wrapper {
+  width: 100%;
+  height: 100vh;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Bildcontainer med låst proportion (superviktigt för responsivitet) */
+.login-image {
+  position: relative;
+  width: 100%;
+  max-width: 1400px;
+  aspect-ratio: 16 / 9; /* Gör att bilden aldrig deformeras */
+  background-image: url("/src/assets/login/loginBild.png");
+  background-size: cover;
+  background-position: center;
+}
+
+/* FORM PÅ DISPLAYEN */
+.display-form {
+  position: absolute;
+
+  /* Dessa procent är nu stabila och responsiva */
+  top: 28.5%;
+  left: 52%;
+  transform: translateX(-50%);
+
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* INPUT-STIL */
+.display-input {
+  width: 100%;
+  height: 60px;
+  padding: 12px;
+  font-size: 1rem;
+
+  background: rgba(0, 0, 0, 0.979);
+  color: #aefaff;
+
+  border: 1px solid rgba(0, 255, 255, 0.4);
+  border-radius: 6px;
+
+  box-shadow: inset 0 0 12px rgba(0, 255, 255, 0.3);
+}
+
+.display-input::placeholder {
+  color: rgba(150, 255, 255, 0.6);
+}
+
+/* START ENGINE KNAPP */
+.start-button {
+  position: absolute;
+
+  top: 185%;
+  left: 45%;
+  transform: translate(-50%, -50%);
+
+  width: 38%;
+  height: 115%;
+
+  border-radius: 50%;
+  border: 4px solid rgba(255, 255, 255, 0.221); /* tunn vit ram */
+
+  background: transparent; /* ← HELT GENOMSKINLIG */
+  color: transparent;      /* ← TEXTEN OSYNLIG (du har redan text i bilden) */
+
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.start-button:hover {
+  transform: translate(-50%, -50%) scale(1.05);
+  border-color: rgba(164, 27, 27, 0.7); /* lite tydligare vid hover */
+}
+
+/* Register text */
+.register-text {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: 0.9rem;
+}
+
+/* 📱 MOBILANPASSNING */
+@media (max-width: 768px) {
+  .display-form {
+    top: 29%;
+    width: 55%; /* större inputs på mobil */
+  }
+
+  .display-input {
+    height: 50px;
+    font-size: 0.9rem;
+  }
+
+  .start-button {
+    width: 22%;
+    height: 22%;
+    font-size: 0.6rem;
+  }
+
+  .register-text {
+    font-size: 0.8rem;
+  }
+}
+
+/* 📱 LITEN MOBIL */
+@media (max-width: 480px) {
+  .display-form {
+    width: 65%;
+  }
+
+  .start-button {
+    width: 26%;
+    height: 26%;
+  }
+}

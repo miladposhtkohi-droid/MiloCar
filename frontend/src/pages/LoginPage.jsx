@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
+import "./Login.css";
+import engineSound from "../assets/sounds/engin.mp3";
 
 const LoginPage = () => {
   const { login } = useAuth();
@@ -21,30 +23,23 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      playEngineSound();
       await login(form);
       navigate("/");
     } catch (error) {
       alert("Fel email eller lösenord");
     }
   };
+  const playEngineSound = () => {
+    const audio = new Audio(engineSound);
+    audio.play();
+  };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-linear-to-br from-blue-50 to-indigo-100"
-    
-    style={{
-      backgroundImage: "url('/src/assets/login/loginBild.png')",
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-    }}
-    
-    
-    
-    >
-      <h1 className="text-3xl font-extrabold text-blue-500 mb-6" >Logga in</h1>
-
-      <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Email:</label>
+    <div className="login-wrapper">
+      <div className="login-image">
+        {/* INPUT-FORM I DISPLAYEN */}
+        <form onSubmit={handleSubmit} className="display-form">
           <input
             type="email"
             name="email"
@@ -52,12 +47,9 @@ const LoginPage = () => {
             value={form.email}
             onChange={handleChange}
             required
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="display-input"
           />
-        </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Lösenord:</label>
           <input
             type="password"
             name="password"
@@ -65,18 +57,17 @@ const LoginPage = () => {
             value={form.password}
             onChange={handleChange}
             required
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+            className="display-input"
           />
-        </div>
 
-        <button type="submit" className="mt-4 px-4 py-2 w-full bg-blue-600 text-white rounded-md hover:bg-blue-700">
-          Logga in
-        </button>
-      </form>
+          {/* START ENGINE KNAPP */}
+          <button type="submit" className="start-button"></button>
+        </form>
 
-      <p className="mt-4">
-        Inte medlem? <Link to="/register" className="text-blue-600 hover:underline">Skapa ett konto</Link>
-      </p>
+        <p className="register-text">
+          Inte medlem? <Link to="/register">Skapa ett konto</Link>
+        </p>
+      </div>
     </div>
   );
 };
