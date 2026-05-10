@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import BgBild from "../assets/bg/BgBild.png";
 
-const HomePage = () => {
+const HomePage = () => {0
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
