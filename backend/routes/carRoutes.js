@@ -9,6 +9,7 @@ import {
 } from "../controllers/carController.js";
 
 import authMiddleware from "../middleware/authMiddleware.js";
+import upload from "../middleware/upload.js";
 
 const router = express.Router();
 
@@ -18,7 +19,7 @@ router.get("/", getAllCars);
 
 //create car
 
-router.post("/", authMiddleware, createCar);
+router.post("/", authMiddleware, upload.single("image"), createCar);
 
 //get my car
 
