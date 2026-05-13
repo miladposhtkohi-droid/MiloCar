@@ -2,6 +2,23 @@ import { Link } from "react-router-dom";
 import "./CarCard.css";
 
 const CarCard = ({ car }) => {
+  const getStatusLabel = () => {
+    switch (car.status) {
+      case "pending":
+        return "Väntar på godkännande";
+      case "approved":
+        return "Godkänd";
+      case "rejected":
+        return "Avslaget";
+      default:
+        return "";
+    }
+  };
+
+  const getStatusClass = () => {
+    return `status-${car.status}`;
+  };
+
   return (
     <article className="car-card">
       {/* Image container */}
@@ -15,6 +32,11 @@ const CarCard = ({ car }) => {
           className="car-card-image"
         />
         <div className="car-card-year-badge">{car.year}</div>
+        {car.status && (
+          <div className={`car-card-status-badge ${getStatusClass()}`}>
+            {getStatusLabel()}
+          </div>
+        )}
       </div>
 
       {/* Card Content */}

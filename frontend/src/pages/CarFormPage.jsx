@@ -5,6 +5,7 @@ import "./CarFormPage.css";
 
 const CarFormPage = () => {
   const navigate = useNavigate();
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const [form, setForm] = useState({
     title: "",
@@ -67,7 +68,10 @@ const CarFormPage = () => {
       }
 
       await createCar(formData);
-      navigate("/my-cars");
+      setShowSuccess(true);
+      setTimeout(() => {
+        navigate("/my-cars");
+      }, 3000);
     } catch (error) {
       console.error("Error creating car:", error);
       alert(
@@ -76,6 +80,32 @@ const CarFormPage = () => {
       );
     }
   };
+
+  if (showSuccess) {
+    return (
+      <div className="car-form-page">
+        <div className="success-container">
+          <div className="success-icon">✓</div>
+          <h1>Annons inlämnad!</h1>
+          <p>Din bil väntar nu på godkännande från admin.</p>
+          <div className="success-info">
+            <p>
+              <strong>Din annons kommer att visas på sidan</strong> när den har
+              godkänts av vår administratör. Du kan se statusen på sidan "Mina
+              bilar".
+            </p>
+            <p>Du omdirigeras till "Mina bilar" på några sekunder...</p>
+          </div>
+          <button
+            onClick={() => navigate("/my-cars")}
+            className="btn-success-redirect"
+          >
+            Gå till Mina bilar
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="car-form-page">

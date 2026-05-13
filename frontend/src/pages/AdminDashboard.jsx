@@ -5,6 +5,7 @@ import "./AdminDashboard.css";
 const AdminDashboard = () => {
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState("pending");
 
   const fetchPendingCars = async () => {
     try {
@@ -48,6 +49,34 @@ const AdminDashboard = () => {
     return <div className="admin-loading">Laddar...</div>;
   }
 
+  const getTabCars = () => {
+    switch (activeTab) {
+      case "pending":
+        return pendingCars;
+      case "approved":
+        return approvedCars;
+      case "rejected":
+        return rejectedCars;
+      default:
+        return pendingCars;
+    }
+  };
+
+  const getTabTitle = () => {
+    switch (activeTab) {
+      case "pending":
+        return "Bilar som väntar på godkännande";
+      case "approved":
+        return "Godkända bilar";
+      case "rejected":
+        return "Avslagna bilar";
+      default:
+        return "Bilar som väntar på godkännande";
+    }
+  };
+
+  const currentTabCars = getTabCars();
+
   return (
     <div className="admin-dashboard">
       <div className="admin-header">
@@ -70,13 +99,34 @@ const AdminDashboard = () => {
         </div>
       </div>
 
+      <div className="admin-tabs">
+        <button
+          className={`admin-tab ${activeTab === "pending" ? "active" : ""}`}
+          onClick={() => setActiveTab("pending")}
+        >
+          Väntande ({pendingCars.length})
+        </button>
+        <button
+          className={`admin-tab ${activeTab === "approved" ? "active" : ""}`}
+          onClick={() => setActiveTab("approved")}
+        >
+          Godkända ({approvedCars.length})
+        </button>
+        <button
+          className={`admin-tab ${activeTab === "rejected" ? "active" : ""}`}
+          onClick={() => setActiveTab("rejected")}
+        >
+          Avslagna ({rejectedCars.length})
+        </button>
+      </div>
+
       <div className="admin-section">
-        <h2>Bilar som väntar på godkännande</h2>
-        {pendingCars.length === 0 ? (
-          <p className="no-cars">Inga bilar väntar på godkännande</p>
+        <h2>{getTabTitle()}</h2>
+        {currentTabCars.length === 0 ? (
+          <p className="no-cars">Inga bilar att visa</p>
         ) : (
           <div className="cars-grid">
-            {pendingCars.map((car) => (
+            {currentTabCars.map((car) => (
               <div key={car._id} className="car-card">
                 <div className="car-info">
                   <h3>{car.title}</h3>
@@ -99,20 +149,22 @@ const AdminDashboard = () => {
                     <strong>Ägare:</strong> {car.owner?.name || "Okänd"}
                   </p>
                 </div>
-                <div className="car-actions">
-                  <button
-                    onClick={() => handleApprove(car._id)}
-                    className="btn-approve"
-                  >
-                    Godkänn
-                  </button>
-                  <button
-                    onClick={() => handleReject(car._id)}
-                    className="btn-reject"
-                  >
-                    Avslå
-                  </button>
-                </div>
+                {activeTab === "pending" && (
+                  <div className="car-actions">
+                    <button
+                      onClick={() => handleApprove(car._id)}
+                      className="btn-approve"
+                    >
+                      Godkänn
+                    </button>
+                    <button
+                      onClick={() => handleReject(car._id)}
+                      className="btn-reject"
+                    >
+                      Avslå
+                    </button>
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -121,5 +173,7 @@ const AdminDashboard = () => {
     </div>
   );
 };
+
+export default AdminDashboard;
 
 export default AdminDashboard;

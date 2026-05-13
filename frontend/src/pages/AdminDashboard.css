@@ -51,6 +51,36 @@
   color: #007bff;
 }
 
+.admin-tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #eee;
+  overflow-x: auto;
+}
+
+.admin-tab {
+  padding: 0.75rem 1.5rem;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: #666;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.admin-tab:hover {
+  color: #007bff;
+}
+
+.admin-tab.active {
+  color: #007bff;
+  border-bottom-color: #007bff;
+}
+
 .admin-section {
   background: white;
   padding: 2rem;
@@ -159,19 +189,19 @@
   .admin-dashboard {
     padding: 1rem;
   }
-  
+
   .admin-stats {
     grid-template-columns: 1fr;
   }
-  
+
   .cars-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .car-actions {
     flex-direction: column;
   }
-  
+
   .btn-approve,
   .btn-reject {
     width: 100%;

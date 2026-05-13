@@ -53,6 +53,32 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.car-card-status-badge {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.car-card-status-badge.status-pending {
+  background-color: #f59e0b;
+}
+
+.car-card-status-badge.status-approved {
+  background-color: #10b981;
+}
+
+.car-card-status-badge.status-rejected {
+  background-color: #ef4444;
+}
+
 .car-card-content {
   padding: 20px;
   display: flex;
