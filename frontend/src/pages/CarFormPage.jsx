@@ -1,11 +1,17 @@
-import { useState } from "react";
-import { createCar } from "../api/carApi";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { createCar, updateCar, getCarById } from "../api/carApi";
+import { useNavigate, useParams } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import "./CarFormPage.css";
 
 const CarFormPage = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const { user } = useAuth();
+  const isEditMode = !!id;
+
   const [showSuccess, setShowSuccess] = useState(false);
+  const [loading, setLoading] = useState(isEditMode);
 
   const [form, setForm] = useState({
     title: "",
@@ -20,6 +26,45 @@ const CarFormPage = () => {
     description: "",
     image: "",
   });
+
+  // Hämta bil-data om det är edit-mode
+  useEffect(() => {
+    if (isEditMode) {
+      const fetchCar = async () => {
+        try {
+          const response = await getCarById(id);
+          const car = response.data;
+
+          // Kontrollera behörigheter
+          if (user.role !== "admin" && car.owner._id !== user.id) {
+            alert("Du har inte behörighet att redigera denna annons");
+            navigate("/my-cars");
+            return;
+          }
+
+          setForm({
+            title: car.title || "",
+            brand: car.brand || "",
+            model: car.model || "",
+            year: car.year || "",
+            price: car.price || "",
+            mileage: car.mileage || "",
+            location: car.location || "",
+            fuelType: car.fuelType || "",
+            gearbox: car.gearbox || "",
+            description: car.description || "",
+            image: car.image || "",
+          });
+          setLoading(false);
+        } catch (error) {
+          console.error("Error fetching car:", error);
+          alert("Kunde inte hämta bil-data");
+          navigate("/my-cars");
+        }
+      };
+      fetchCar();
+    }
+  }, [id, isEditMode, navigate, user]);
 
   const handleChange = (e) => {
     if (e.target.type === "file") {
@@ -67,15 +112,21 @@ const CarFormPage = () => {
         formData.append("image", form.imageFile);
       }
 
-      await createCar(formData);
-      setShowSuccess(true);
-      setTimeout(() => {
+      if (isEditMode) {
+        await updateCar(id, formData);
+        alert("Annons uppdaterad!");
         navigate("/my-cars");
-      }, 3000);
+      } else {
+        await createCar(formData);
+        setShowSuccess(true);
+        setTimeout(() => {
+          navigate("/my-cars");
+        }, 3000);
+      }
     } catch (error) {
-      console.error("Error creating car:", error);
+      console.error("Error saving car:", error);
       alert(
-        "Kunde inte skapa bil: " +
+        `Kunde inte ${isEditMode ? "uppdatera" : "skapa"} bil: ` +
           (error.response?.data?.message || error.message),
       );
     }
@@ -107,11 +158,25 @@ const CarFormPage = () => {
     );
   }
 
+  if (loading) {
+    return (
+      <div className="car-form-page">
+        <div className="form-container">
+          <div className="loading">Laddar bil-data...</div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="car-form-page">
       <div className="form-container">
-        <h1>Lägg upp bil</h1>
-        <p>Fyll i informationen om din bil nedan</p>
+        <h1>{isEditMode ? "Redigera annons" : "Lägg upp bil"}</h1>
+        <p>
+          {isEditMode
+            ? "Uppdatera informationen om din bil"
+            : "Fyll i informationen om din bil nedan"}
+        </p>
 
         <form onSubmit={handleSubmit} className="car-form">
           <div className="form-group">

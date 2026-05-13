@@ -13,4 +13,11 @@ export const createCar = (data) =>
     },
   });
 
+export const updateCar = (id, data) =>
+  axiosClient.put(`/cars/${id}`, data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
 export const deleteCar = (id) => axiosClient.delete(`/cars/${id}`);

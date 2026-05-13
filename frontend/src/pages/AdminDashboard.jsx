@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { getAllCarsAdmin, approveCar, rejectCar } from "../api/adminApi";
+import { useNavigate } from "react-router-dom";
 import "./AdminDashboard.css";
 
 const AdminDashboard = () => {
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("pending");
+  const navigate = useNavigate();
 
   const fetchPendingCars = async () => {
     try {
@@ -39,6 +41,10 @@ const AdminDashboard = () => {
     } catch (error) {
       alert("Kunde inte avslå bilen");
     }
+  };
+
+  const handleEdit = (carId) => {
+    navigate(`/cars/${carId}/edit`);
   };
 
   const pendingCars = cars.filter((car) => car.status === "pending");
@@ -162,6 +168,16 @@ const AdminDashboard = () => {
                       className="btn-reject"
                     >
                       Avslå
+                    </button>
+                  </div>
+                )}
+                {activeTab !== "pending" && (
+                  <div className="car-actions">
+                    <button
+                      onClick={() => handleEdit(car._id)}
+                      className="btn-edit"
+                    >
+                      Redigera
                     </button>
                   </div>
                 )}

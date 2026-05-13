@@ -148,7 +148,8 @@
 }
 
 .btn-approve,
-.btn-reject {
+.btn-reject,
+.btn-edit {
   padding: 0.75rem 1.5rem;
   border: none;
   border-radius: 4px;
@@ -175,6 +176,15 @@
 
 .btn-reject:hover {
   background-color: #c82333;
+}
+
+.btn-edit {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-edit:hover {
+  background-color: #0056b3;
 }
 
 .admin-loading {

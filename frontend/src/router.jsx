@@ -46,6 +46,16 @@ const router = createBrowserRouter([
       },
 
       {
+        path: "cars/:id/edit",
+
+        element: (
+          <ProtectedRoute>
+            <CarFormPage />
+          </ProtectedRoute>
+        ),
+      },
+
+      {
         path: "my-cars",
 
         element: (

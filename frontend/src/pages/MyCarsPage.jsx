@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { getMyCars, deleteCar } from "../api/carApi";
+import { useNavigate } from "react-router-dom";
 import CarCard from "../components/Cars/CarCard";
+import "./MyCarsPage.css";
 
 const MyCarsPage = () => {
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   const fetchMyCars = async () => {
     setLoading(true);
@@ -24,6 +27,10 @@ const MyCarsPage = () => {
     fetchMyCars(); // hämta listan igen efter borttagning
   };
 
+  const handleEdit = (carId) => {
+    navigate(`/cars/${carId}/edit`);
+  };
+
   if (loading) return <div>Laddar dina bilar...</div>;
 
   return (
@@ -38,10 +45,10 @@ const MyCarsPage = () => {
             <CarCard car={car} />
 
             <div className="my-car-actions">
+              {car.status === "approved" && (
+                <button onClick={() => handleEdit(car._id)}>Redigera</button>
+              )}
               <button onClick={() => handleDelete(car._id)}>Ta bort</button>
-              <button onClick={() => alert("Redigering kommer snart!")}>
-                Redigera
-              </button>
             </div>
           </div>
         ))}

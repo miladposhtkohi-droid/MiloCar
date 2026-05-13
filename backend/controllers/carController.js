@@ -98,8 +98,17 @@ export const updateCar = async (req, res) => {
       return res.status(404).json({ message: "Car not found" });
     }
 
-    //kolla om användaren är ägare till bilen eller admin
-    if (car.owner.toString() !== userId && userRole !== "admin") {
+    // Admin kan alltid redigera
+    if (userRole === "admin") {
+      // Admin kan redigera alla bilar
+    } else if (car.owner.toString() === userId) {
+      // Användare kan endast redigera sin egen bil OM den är godkänd
+      if (car.status !== "approved") {
+        return res.status(403).json({
+          message: "Du kan endast redigera godkända annonser",
+        });
+      }
+    } else {
       return res.status(403).json({ message: "Unauthorized" });
     }
 
