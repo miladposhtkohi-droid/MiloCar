@@ -1,127 +1,190 @@
-/* Wrapper */
+/* ====== FULLSCREEN BACKGROUND ====== */
 .login-wrapper {
   width: 100%;
   height: 100vh;
-  background: black;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
-}
+  padding: 20px;
 
-/* Bildcontainer med låst proportion (superviktigt för responsivitet) */
-.login-image {
   position: relative;
-  width: 100%;
-  max-width: 1400px;
-  aspect-ratio: 16 / 9; /* Gör att bilden aldrig deformeras */
-  background-image: url("/src/assets/login/loginBild.png");
-  background-size: cover;
-  background-position: center;
+  overflow: hidden;
+  animation: fadeInBg 1.5s ease-in forwards;
 }
 
-/* FORM PÅ DISPLAYEN */
-.display-form {
+/* ====== HEADLIGHT FLASH ====== */
+.headlight-flash {
   position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 60%, rgba(255, 255, 255, 0.6), transparent 70%);
+  opacity: 0;
+  animation: headlightsOn 1.2s ease-out forwards;
+  pointer-events: none;
+}
 
-  /* Dessa procent är nu stabila och responsiva */
-  top: 28.5%;
-  left: 52%;
-  transform: translateX(-50%);
+@keyframes headlightsOn {
+  0% { opacity: 0; }
+  40% { opacity: 0.8; }
+  100% { opacity: 0; }
+}
 
-  width: 30%;
+/* ====== LOGIN CARD ====== */
+.login-card {
+  width: 480px;
+  padding: 45px 40px;
+  background: rgba(10, 10, 10, 0.85);
+  border-radius: 22px;
+  border: 2px solid #1c1c1c;
+  box-shadow:
+    0 0 25px rgba(0, 0, 0, 0.8),
+    inset 0 0 25px rgba(0, 140, 255, 0.15);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 25px;
+  animation: fadeIn 0.7s ease-out;
 }
 
-/* INPUT-STIL */
+/* ====== TITLE ====== */
+.login-title {
+  color: #d9d9d9;
+  font-size: 1.7rem;
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+/* ====== INPUTS ====== */
 .display-input {
   width: 100%;
-  height: 60px;
-  padding: 12px;
+  height: 58px;
+  padding: 14px;
   font-size: 1rem;
+  background: #111;
+  color: #e6e6e6;
+  border: 1px solid #2b2b2b;
+  border-radius: 10px;
+  box-shadow:
+    inset 0 0 12px rgba(0, 140, 255, 0.15),
+    0 0 6px rgba(0, 140, 255, 0.1);
+  transition: 0.25s ease;
+}
 
-  background: rgba(0, 0, 0, 0.979);
-  color: #aefaff;
-
-  border: 1px solid rgba(0, 255, 255, 0.4);
-  border-radius: 6px;
-
-  box-shadow: inset 0 0 12px rgba(0, 255, 255, 0.3);
+.display-input:focus {
+  outline: none;
+  border-color: #008cff;
+  box-shadow:
+    0 0 12px rgba(0, 140, 255, 0.6),
+    inset 0 0 12px rgba(0, 140, 255, 0.4);
 }
 
 .display-input::placeholder {
-  color: rgba(150, 255, 255, 0.6);
+  color: #7f7f7f;
 }
 
-/* START ENGINE KNAPP */
+/* ====== START BUTTON ====== */
 .start-button {
-  position: absolute;
-
-  top: 185%;
-  left: 45%;
-  transform: translate(-50%, -50%);
-
-  width: 38%;
-  height: 115%;
-
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
-  border: 4px solid rgba(255, 255, 255, 0.221); /* tunn vit ram */
-
-  background: transparent; /* ← HELT GENOMSKINLIG */
-  color: transparent;      /* ← TEXTEN OSYNLIG (du har redan text i bilden) */
-
+  background: radial-gradient(circle at center, #ff1a1a, #b30000);
+  border: 3px solid #660000;
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
   cursor: pointer;
-  transition: 0.2s ease;
+  transition: 0.25s ease;
+  margin: 20px auto 0 auto;
+  box-shadow:
+    0 0 20px rgba(255, 0, 0, 0.5),
+    inset 0 0 12px rgba(255, 255, 255, 0.25);
 }
 
 .start-button:hover {
-  transform: translate(-50%, -50%) scale(1.05);
-  border-color: rgba(164, 27, 27, 0.7); /* lite tydligare vid hover */
+  transform: scale(1.08);
+  box-shadow:
+    0 0 35px rgba(255, 0, 0, 0.9),
+    inset 0 0 18px rgba(255, 255, 255, 0.35);
 }
 
-/* Register text */
+.start-button:active {
+  transform: scale(0.95);
+  box-shadow:
+    inset 0 0 25px rgba(0, 0, 0, 0.7),
+    0 0 10px rgba(255, 0, 0, 0.4);
+}
+
+/* ====== SUCCESS MESSAGE ====== */
+.success-message {
+  color: #00ffcc;
+  font-size: 1.1rem;
+  text-align: right;
+  margin-top: -10px;
+  animation: welcomeFade 1.2s ease-out forwards;
+  text-shadow: 0 0 12px rgba(0, 255, 200, 0.8);
+}
+
+@keyframes welcomeFade {
+  0% { opacity: 0; transform: translateX(20px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+/* ====== ERROR MESSAGE ====== */
+.error-message {
+  color: #ff4d4d;
+  font-size: 1rem;
+  text-align: right;
+  margin-top: -10px;
+  animation: errorShake 0.5s ease-out;
+  text-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+}
+
+@keyframes errorShake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(6px); }
+  75% { transform: translateX(-6px); }
+  100% { transform: translateX(0); }
+}
+
+/* ====== REGISTER TEXT ====== */
 .register-text {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: white;
+  text-align: center;
+  color: #bfbfbf;
   font-size: 0.9rem;
 }
 
-/* 📱 MOBILANPASSNING */
-@media (max-width: 768px) {
-  .display-form {
-    top: 29%;
-    width: 55%; /* större inputs på mobil */
-  }
-
-  .display-input {
-    height: 50px;
-    font-size: 0.9rem;
-  }
-
-  .start-button {
-    width: 22%;
-    height: 22%;
-    font-size: 0.6rem;
-  }
-
-  .register-text {
-    font-size: 0.8rem;
-  }
+.register-text a {
+  color: #008cff;
+  text-decoration: none;
+  font-weight: 500;
 }
 
-/* 📱 LITEN MOBIL */
-@media (max-width: 480px) {
-  .display-form {
-    width: 65%;
-  }
+.register-text a:hover {
+  text-decoration: underline;
+}
 
-  .start-button {
-    width: 26%;
-    height: 26%;
+/* ====== ANIMATIONS ====== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInBg {
+  from { filter: brightness(0.4); }
+  to { filter: brightness(1); }
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 480px) {
+  .login-card {
+    width: 100%;
+    padding: 35px 25px;
   }
 }

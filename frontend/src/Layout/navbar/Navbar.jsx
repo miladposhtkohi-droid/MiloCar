@@ -1,4 +1,5 @@
 import { NavLink, Link } from "react-router-dom";
+
 import { useAuth } from "../../context/AuthContext";
 
 const Navbar = () => {
@@ -24,6 +25,7 @@ const Navbar = () => {
           >
             Alla bilar
           </NavLink>
+
           <NavLink
             to="/map"
             className={({ isActive }) =>
@@ -47,6 +49,7 @@ const Navbar = () => {
               Mina bilar
             </NavLink>
           )}
+
           {user && (
             <NavLink
               to="/cars/new"
@@ -59,18 +62,6 @@ const Navbar = () => {
               Lägg upp bil
             </NavLink>
           )}
-          {user && user.role === "admin" && (
-            <NavLink
-              to="/admin"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-blue-600 transition-colors"
-                  : "hover:text-blue-600 transition-colors"
-              }
-            >
-              Admin
-            </NavLink>
-          )}
         </nav>
 
         <div className="flex items-center space-x-4">
@@ -80,8 +71,10 @@ const Navbar = () => {
                 <span className="text-sm font-semibold text-slate-800">
                   {user.name}
                 </span>
+
                 <span className="text-xs text-slate-500">Inloggad</span>
               </div>
+
               <button
                 onClick={logout}
                 className="px-4 py-2 text-sm font-medium text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-colors shadow-sm"
@@ -97,6 +90,7 @@ const Navbar = () => {
               >
                 Logga in
               </NavLink>
+
               <NavLink
                 to="/register"
                 className="px-5 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 hover:shadow-md transition-all"

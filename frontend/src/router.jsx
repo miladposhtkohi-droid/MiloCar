@@ -1,15 +1,23 @@
 import { createBrowserRouter } from "react-router-dom";
+
 import App from "./App";
 
 import HomePage from "./pages/HomePage";
+
 import CarsPage from "./pages/CarsPage";
+
 import CarDetailsPage from "./pages/CarDetailsPage";
+
 import CarFormPage from "./pages/CarFormPage";
+
 import MyCarsPage from "./pages/MyCarsPage";
+
 import MapPage from "./pages/MapPage";
+
 import AdminDashboard from "./pages/AdminDashboard";
 
 import LoginPage from "./pages/LoginPage";
+
 import RegisterPage from "./pages/RegisterPage";
 
 import ProtectedRoute from "./components/Auth/ProtectedRoute";
@@ -17,15 +25,19 @@ import ProtectedRoute from "./components/Auth/ProtectedRoute";
 const router = createBrowserRouter([
   {
     path: "/",
+
     element: <App />,
+
     children: [
       { index: true, element: <HomePage /> },
 
       { path: "cars", element: <CarsPage /> },
+
       { path: "cars/:id", element: <CarDetailsPage /> },
 
       {
         path: "cars/new",
+
         element: (
           <ProtectedRoute>
             <CarFormPage />
@@ -35,6 +47,7 @@ const router = createBrowserRouter([
 
       {
         path: "my-cars",
+
         element: (
           <ProtectedRoute>
             <MyCarsPage />
@@ -44,16 +57,8 @@ const router = createBrowserRouter([
 
       { path: "map", element: <MapPage /> },
 
-      {
-        path: "admin",
-        element: (
-          <ProtectedRoute>
-            <AdminDashboard />
-          </ProtectedRoute>
-        ),
-      },
-
       { path: "login", element: <LoginPage /> },
+
       { path: "register", element: <RegisterPage /> },
     ],
   },
