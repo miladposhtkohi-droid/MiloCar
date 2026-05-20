@@ -27,6 +27,17 @@ const Navbar = () => {
           </NavLink>
 
           <NavLink
+            to="/rent"
+            className={({ isActive }) =>
+              isActive
+                ? "text-blue-600 transition-colors"
+                : "hover:text-blue-600 transition-colors"
+            }
+          >
+            Hyr bilar
+          </NavLink>
+
+          <NavLink
             to="/map"
             className={({ isActive }) =>
               isActive

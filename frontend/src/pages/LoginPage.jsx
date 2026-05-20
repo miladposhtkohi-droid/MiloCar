@@ -32,8 +32,6 @@ const LoginPage = () => {
 
     setErrorMessage("");
     setSuccessMessage("");
-    setStarting(true);
-    playEngineSound();
 
     try {
       // FÖRSÖK LOGGA IN
@@ -41,15 +39,16 @@ const LoginPage = () => {
 
       // OM DET FUNKAR
       setSuccessMessage("Välkommen till MiloCar");
-      setStarting(false);
+      setStarting(true);
+      playEngineSound();
 
       // LITEN DELAY INNAN NAVIGERING
       setTimeout(() => {
+        setStarting(false);
         navigate("/");
       }, 1500);
     } catch (err) {
       // OM FEL UPPGIFTER / INTE REGISTRERAD
-      setStarting(false);
       setErrorMessage("Du måste först skapa konto");
     }
   };

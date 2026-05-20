@@ -6,6 +6,7 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import carRoutes from "./routes/carRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
+import bookingRoutes from "./routes/bookingRoutes.js";
 
 // 1. Ladda miljövariabler (.env)
 dotenv.config();
@@ -34,6 +35,7 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/cars", carRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/bookings", bookingRoutes);
 
 // 8. Starta servern
 const PORT = process.env.PORT || 3000;

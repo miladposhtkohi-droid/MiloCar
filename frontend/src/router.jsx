@@ -17,7 +17,7 @@ import MapPage from "./pages/MapPage";
 import AdminDashboard from "./pages/AdminDashboard";
 
 import LoginPage from "./pages/LoginPage";
-
+import RentalPage from "./pages/RentalPage";
 import RegisterPage from "./pages/RegisterPage";
 
 import ProtectedRoute from "./components/Auth/ProtectedRoute";
@@ -77,6 +77,7 @@ const router = createBrowserRouter([
       },
 
       { path: "login", element: <LoginPage /> },
+      { path: "rent", element: <RentalPage /> },
 
       { path: "register", element: <RegisterPage /> },
     ],

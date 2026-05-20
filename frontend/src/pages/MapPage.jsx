@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getAllCars } from "../api/carApi";
+import "./MapPage.css";
 
 const MapPage = () => {
   const [cars, setCars] = useState([]);
@@ -79,52 +80,24 @@ const MapPage = () => {
       <p>Välj en bil för att se var den ligger på kartan.</p>
 
       {loading ? (
-        <div>Laddar kartdata...</div>
+        <div className="loading-message">Laddar kartdata...</div>
       ) : (
-        <div
-          className="map-page-grid"
-          style={{
-            display: "grid",
-            gap: "1.5rem",
-            gridTemplateColumns: "320px 1fr",
-          }}
-        >
-          <aside
-            className="map-car-list"
-            style={{
-              padding: "1rem",
-              border: "1px solid #ddd",
-              borderRadius: "12px",
-              background: "#fff",
-            }}
-          >
+        <div className="map-page-grid">
+          <aside className="map-car-list">
             <h2>Tillgängliga bilar</h2>
             {cars.length === 0 ? (
               <p>Inga godkända bilar hittades.</p>
             ) : (
-              <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+              <ul>
                 {cars.map((car) => (
-                  <li key={car._id} style={{ marginBottom: "1rem" }}>
+                  <li key={car._id}>
                     <button
                       type="button"
                       onClick={() => handleCarSelect(car)}
-                      style={{
-                        width: "100%",
-                        textAlign: "left",
-                        padding: "0.75rem",
-                        borderRadius: "10px",
-                        border:
-                          car === selectedCar
-                            ? "2px solid #2563eb"
-                            : "1px solid #ccc",
-                        background: car === selectedCar ? "#eff6ff" : "#fafafa",
-                        cursor: "pointer",
-                      }}
+                      className={car === selectedCar ? "selected" : ""}
                     >
                       <strong>{car.title}</strong>
-                      <div style={{ fontSize: "0.95rem", color: "#555" }}>
-                        {car.location || "Ingen plats"}
-                      </div>
+                      <div>{car.location || "Ingen plats"}</div>
                     </button>
                   </li>
                 ))}
@@ -132,29 +105,20 @@ const MapPage = () => {
             )}
           </aside>
 
-          <section
-            className="map-view"
-            style={{
-              minHeight: "520px",
-              borderRadius: "12px",
-              overflow: "hidden",
-              border: "1px solid #ddd",
-            }}
-          >
+          <section className="map-view">
             {error ? (
-              <div style={{ padding: "1.5rem" }}>
-                <p style={{ color: "#b91c1c" }}>{error}</p>
+              <div className="error-message">
+                <p>{error}</p>
               </div>
             ) : mapUrl ? (
               <iframe
                 title="Bilens plats"
                 src={mapUrl}
-                style={{ width: "100%", minHeight: "520px", border: 0 }}
                 loading="lazy"
                 referrerPolicy="no-referrer"
               />
             ) : (
-              <div style={{ padding: "1.5rem" }}>
+              <div className="no-selection">
                 <p>Välj en bil för att visa platsen på kartan.</p>
               </div>
             )}

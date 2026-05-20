@@ -1,0 +1,145 @@
+/* MapPage.css */
+
+.page {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page h1 {
+  color: #333;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.page p {
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.map-page-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 320px 1fr;
+}
+
+.map-car-list {
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.map-car-list h2 {
+  color: #333;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.map-car-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.map-car-list li {
+  margin-bottom: 1rem;
+}
+
+.map-car-list button {
+  width: 100%;
+  text-align: left;
+  padding: 0.75rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  background: #fafafa;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.map-car-list button:hover {
+  background: #f0f0f0;
+}
+
+.map-car-list button.selected {
+  border: 2px solid #2563eb;
+  background: #eff6ff;
+}
+
+.map-car-list button strong {
+  display: block;
+  color: #333;
+  margin-bottom: 0.25rem;
+}
+
+.map-car-list button div {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.map-view {
+  min-height: 520px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #ddd;
+  background: #fff;
+}
+
+.map-view iframe {
+  width: 100%;
+  min-height: 520px;
+  border: 0;
+}
+
+.map-view .error-message {
+  padding: 1.5rem;
+}
+
+.map-view .error-message p {
+  color: #b91c1c;
+  margin: 0;
+}
+
+.map-view .no-selection {
+  padding: 1.5rem;
+}
+
+.map-view .no-selection p {
+  color: #666;
+  margin: 0;
+}
+
+.loading-message {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .page {
+    padding: 1rem;
+  }
+
+  .page h1 {
+    font-size: 1.5rem;
+  }
+
+  .map-page-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .map-car-list {
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  .map-view {
+    min-height: 400px;
+  }
+
+  .map-view iframe {
+    min-height: 400px;
+  }
+}
