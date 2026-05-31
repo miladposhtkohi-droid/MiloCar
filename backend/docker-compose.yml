@@ -1,0 +1,27 @@
+
+
+services:
+  db:
+    image: mongo:7
+    container_name: milocar-mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - ./mongo-data:/data/db
+
+  backend:
+    build: .
+    container_name: milocar-backend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      MONGO_URI: "mongodb://admin:password@db:27017/milocar?authSource=admin"
+      JWT_SECRET: "superhemlignyckel123"
+      PORT: "3000"
+    depends_on:
+      - db
