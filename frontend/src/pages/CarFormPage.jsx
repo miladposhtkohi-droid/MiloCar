@@ -178,7 +178,11 @@ const CarFormPage = () => {
             : "Fyll i informationen om din bil nedan"}
         </p>
 
-        <form onSubmit={handleSubmit} className="car-form">
+        <form
+          onSubmit={handleSubmit}
+          className="car-form"
+          encType="multipart/form-data"
+        >
           <div className="form-group">
             <label htmlFor="title">Titel</label>
             <input
