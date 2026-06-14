@@ -25,6 +25,7 @@ const CarFormPage = () => {
     gearbox: "",
     description: "",
     image: "",
+    imageFile: null,
   });
 
   // Hämta bil-data om det är edit-mode
@@ -54,6 +55,7 @@ const CarFormPage = () => {
             gearbox: car.gearbox || "",
             description: car.description || "",
             image: car.image || "",
+            imageFile: null,
           });
           setLoading(false);
         } catch (error) {
@@ -77,6 +79,12 @@ const CarFormPage = () => {
           ...form,
           image: imageUrl,
           imageFile: file, // Spara fil-objektet för upload
+        });
+      } else {
+        setForm({
+          ...form,
+          image: "",
+          imageFile: null,
         });
       }
     } else {

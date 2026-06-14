@@ -23,6 +23,9 @@ export const createCar = async (req, res) => {
     };
 
     // Lägg till bild om den finns
+    console.log("createCar req.body:", req.body);
+    console.log("createCar req.file:", req.file);
+
     if (req.file) {
       carData.image = req.file.filename; // Spara filnamnet från multer
     }
@@ -33,6 +36,10 @@ export const createCar = async (req, res) => {
     //returnera bil
     res.status(201).json(car);
   } catch (error) {
+    console.error("createCar error:", error);
+    if (error.name === "ValidationError" || error.name === "MulterError") {
+      return res.status(400).json({ message: error.message });
+    }
     res.status(500).json({ message: error.message });
   }
 };

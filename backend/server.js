@@ -14,8 +14,9 @@ dotenv.config();
 // 2. Skapa express-app
 const app = express();
 
-// 3. Middleware för att läsa JSON
+// 3. Middleware för att läsa JSON och URL-kodade formulär
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // 4. Tillåt frontend (React) att prata med backend
 app.use(cors());
@@ -36,6 +37,24 @@ app.use("/api/auth", authRoutes);
 app.use("/api/cars", carRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/bookings", bookingRoutes);
+
+// Felhantering för multer och andra serverfel
+app.use((err, req, res, next) => {
+  console.error(err);
+
+  if (err.code === "LIMIT_FILE_SIZE") {
+    return res.status(400).json({ message: "Filen är för stor. Max 10MB." });
+  }
+
+  if (
+    err.name === "MulterError" ||
+    err.message === "Endast bildfiler är tillåtna"
+  ) {
+    return res.status(400).json({ message: err.message });
+  }
+
+  res.status(500).json({ message: err.message || "Internal server error" });
+});
 
 // 8. Starta servern
 const PORT = process.env.PORT || 3000;
