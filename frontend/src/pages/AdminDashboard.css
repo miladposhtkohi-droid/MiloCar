@@ -105,7 +105,7 @@
 
 .cars-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
 }
 
@@ -141,6 +141,7 @@
 
 .car-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
   margin-top: 1.5rem;
   padding-top: 1rem;
@@ -157,7 +158,8 @@
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
-  flex: 1;
+  flex: 1 1 140px;
+  min-width: 140px;
 }
 
 .btn-approve {
@@ -213,7 +215,15 @@
   }
 
   .btn-approve,
-  .btn-reject {
+  .btn-reject,
+  .btn-edit {
     width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .car-actions {
+    flex-direction: column;
+    gap: 0.75rem;
   }
 }

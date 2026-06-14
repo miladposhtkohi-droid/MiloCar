@@ -11,8 +11,9 @@
   border: 1px solid #e2e8f0;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  max-width: 320px;
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .car-card:hover {
@@ -138,9 +139,9 @@
 }
 
 .car-card-feature-text {
-  white-space: nowrap;
+  white-space: normal;
   overflow: hidden;
-  text-overflow: ellipsis;
+  word-break: break-word;
 }
 
 .car-card-feature.location {
@@ -187,5 +188,19 @@
   .car-card-features {
     grid-template-columns: 1fr;
     gap: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .car-card-image-container {
+    height: 140px;
+  }
+
+  .car-card-content {
+    padding: 14px;
+  }
+
+  .car-card-price {
+    font-size: 16px;
   }
 }

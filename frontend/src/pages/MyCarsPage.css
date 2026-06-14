@@ -1,5 +1,17 @@
 /* MyCarsPage.css */
 
+.page {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.car-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
 .my-car-item {
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -7,14 +19,17 @@
   margin-bottom: 1rem;
   background: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow-wrap: anywhere;
+  min-width: 0;
 }
 
 .my-car-actions {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.75rem;
   margin-top: 1rem;
   padding-top: 1rem;
   border-top: 1px solid #eee;
+  flex-wrap: wrap;
 }
 
 .my-car-actions button {
@@ -24,7 +39,8 @@
   font-size: 0.9rem;
   cursor: pointer;
   transition: background-color 0.2s ease;
-  flex: 1;
+  flex: 1 1 140px;
+  min-width: 140px;
 }
 
 .my-car-actions button:first-child {
@@ -43,4 +59,46 @@
 
 .my-car-actions button:last-child:hover {
   background-color: #c82333;
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding: 1rem;
+  }
+
+  .car-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .my-car-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .my-car-actions button {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding: 0.75rem;
+  }
+
+  .my-car-item {
+    padding: 0.9rem;
+  }
+}
+
+.my-car-item {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 768px) {
+  .my-car-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
 }
