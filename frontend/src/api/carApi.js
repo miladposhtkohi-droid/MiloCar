@@ -6,18 +6,8 @@ export const getMyCars = () => axiosClient.get("/cars/my");
 
 export const getCarById = (id) => axiosClient.get(`/cars/${id}`);
 
-export const createCar = (data) =>
-  axiosClient.post("/cars", data, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
+export const createCar = (data) => axiosClient.post("/cars", data);
 
-export const updateCar = (id, data) =>
-  axiosClient.put(`/cars/${id}`, data, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
+export const updateCar = (id, data) => axiosClient.put(`/cars/${id}`, data);
 
 export const deleteCar = (id) => axiosClient.delete(`/cars/${id}`);
