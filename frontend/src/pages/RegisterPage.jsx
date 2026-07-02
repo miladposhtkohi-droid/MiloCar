@@ -12,6 +12,8 @@ const RegisterPage = () => {
     email: "",
     password: "",
   });
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     setForm({
@@ -22,11 +24,25 @@ const RegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMessage("");
+    setIsSubmitting(true);
     try {
       await register(form);
       navigate("/");
     } catch (error) {
-      alert("Registrering misslyckades");
+      // Fel från backend (t.ex. "User already exists"):
+      //   error.response.data.message
+      // Nätverksfel / server nere (ECONNREFUSED):
+      //   error.request finns, men ingen response
+      const serverMessage =
+        error.response?.data?.message ||
+        error.message ||
+        "Registrering misslyckades";
+      setErrorMessage(serverMessage);
+      // Logga hela felet för felsökning i konsolen
+      console.error("Registreringsfel:", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -36,6 +52,21 @@ const RegisterPage = () => {
         <h1 className="register-title">Create Account</h1>
 
         <form onSubmit={handleSubmit} className="register-form">
+          {errorMessage && (
+            <p
+              role="alert"
+              style={{
+                color: "#b91c1c",
+                background: "#fee2e2",
+                padding: "0.5rem 0.75rem",
+                borderRadius: "6px",
+                fontSize: "0.9rem",
+                margin: "0 0 0.75rem 0",
+              }}
+            >
+              {errorMessage}
+            </p>
+          )}
           <input
             type="text"
             name="name"
@@ -66,8 +97,12 @@ const RegisterPage = () => {
             className="register-input"
           />
 
-          <button type="submit" className="register-button">
-            Skapa konto
+          <button
+            type="submit"
+            className="register-button"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Skapar konto..." : "Skapa konto"}
           </button>
         </form>
       </div>
